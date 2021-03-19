@@ -1,6 +1,6 @@
 script_name('RouletteFarm')
 script_author('DeneKyn')
-script_version("1.0")
+script_version("1.1")
 
 local sampev = require 'lib.samp.events'
 local imgui = require 'mimgui'
@@ -86,63 +86,63 @@ local newFrame = imgui.OnFrame(
         imgui.SetNextWindowPos(imgui.ImVec2(sizeX / 2, sizeY / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
         imgui.SetNextWindowSize(imgui.ImVec2(250, 270), imgui.Cond.FirstUseEver)
         imgui.Begin("Roulette Farm", renderWindow, imgui.WindowFlags.NoResize)
-        imgui.Text(u8"Ящики")
+        imgui.Text(u8"ГџГ№ГЁГЄГЁ")
 		imgui.BeginChild("##rullet", imgui.ImVec2(230, 84), true, imgui.WindowFlags.NoScrollbar)
-			if imgui.Checkbox(u8'Обычный', chest.common.open) then
+			if imgui.Checkbox(u8'ГЋГЎГ»Г·Г­Г»Г©', chest.common.open) then
 				mainIni.chest_open.common = chest.common.open[0]
 				inicfg.save(mainIni)
 			end
 			imgui.SameLine()
-			imgui.TextQuestion("( ? )", u8"Ящик, который выдается за прохождение начальных квестов")
+			imgui.TextQuestion("( ? )", u8"ГџГ№ГЁГЄ, ГЄГ®ГІГ®Г°Г»Г© ГўГ»Г¤Г ГҐГІГ±Гї Г§Г  ГЇГ°Г®ГµГ®Г¦Г¤ГҐГ­ГЁГҐ Г­Г Г·Г Г«ГјГ­Г»Гµ ГЄГўГҐГ±ГІГ®Гў")
 			if chest.common.sec > 0 then
 			imgui.SameLine(160)
 			imgui.Text(string.format("%dm : %ds ", math.floor(chest.common.sec/60), chest.common.sec%60))
 			end
 
-			if imgui.Checkbox(u8'Донатный', chest.donate.open) then
+			if imgui.Checkbox(u8'Г„Г®Г­Г ГІГ­Г»Г©', chest.donate.open) then
 				mainIni.chest_open.donate = chest.donate.open[0]
 				inicfg.save(mainIni)
 			end
 			imgui.SameLine()
-			imgui.TextQuestion("( ? )", u8"Ящик, который покупается в донат-меню за 6.000 AZ монет")
+			imgui.TextQuestion("( ? )", u8"ГџГ№ГЁГЄ, ГЄГ®ГІГ®Г°Г»Г© ГЇГ®ГЄГіГЇГ ГҐГІГ±Гї Гў Г¤Г®Г­Г ГІ-Г¬ГҐГ­Гѕ Г§Г  6.000 AZ Г¬Г®Г­ГҐГІ")
 			if chest.donate.sec > 0 then
 			imgui.SameLine(160)
 			imgui.Text(string.format("%dm : %ds ", math.floor(chest.donate.sec/60), chest.donate.sec%60))
 			end
 
-			if imgui.Checkbox(u8'Платиновый', chest.platinum.open) then
+			if imgui.Checkbox(u8'ГЏГ«Г ГІГЁГ­Г®ГўГ»Г©', chest.platinum.open) then
 				mainIni.chest_open.platinum = chest.platinum.open[0]
 				inicfg.save(mainIni)
 			end
 			imgui.SameLine()
-			imgui.TextQuestion("( ? )", u8"Ящик, который выдается после того, как вы отыграете 360 часов")
+			imgui.TextQuestion("( ? )", u8"ГџГ№ГЁГЄ, ГЄГ®ГІГ®Г°Г»Г© ГўГ»Г¤Г ГҐГІГ±Гї ГЇГ®Г±Г«ГҐ ГІГ®ГЈГ®, ГЄГ ГЄ ГўГ» Г®ГІГ»ГЈГ°Г ГҐГІГҐ 360 Г·Г Г±Г®Гў")
 			if chest.platinum.sec > 0 then
 			imgui.SameLine(160)
 			imgui.Text(string.format("%dm : %ds ", math.floor(chest.platinum.sec/60), chest.platinum.sec%60))
 			end
 		imgui.EndChild()
 
-		imgui.Text(u8"Настройки")
+		imgui.Text(u8"ГЌГ Г±ГІГ°Г®Г©ГЄГЁ")
 		imgui.BeginChild("##settings", imgui.ImVec2(230, settings_y), true, imgui.WindowFlags.NoScrollbar)
-			if imgui.Checkbox(u8'Сообщения в чат', settings.chat) then
+			if imgui.Checkbox(u8'Г‘Г®Г®ГЎГ№ГҐГ­ГЁГї Гў Г·Г ГІ', settings.chat) then
 				mainIni.settings.chat = settings.chat[0]
 				inicfg.save(mainIni)
 			end
 			imgui.SameLine()
-			imgui.TextQuestion("( ? )", u8"Вывод сообщени¤, связанный с рабоотй скриптом, в чат сампа")
+			imgui.TextQuestion("( ? )", u8"Г‚Г»ГўГ®Г¤ Г±Г®Г®ГЎГ№ГҐГ­ГЁВ¤, Г±ГўГїГ§Г Г­Г­Г»Г© Г± Г°Г ГЎГ®Г®ГІГ© Г±ГЄГ°ГЁГЇГІГ®Г¬, Гў Г·Г ГІ Г±Г Г¬ГЇГ ")
 
-			if imgui.Checkbox(u8'Время до открытия', settings.time_on_screen) then
+			if imgui.Checkbox(u8'Г‚Г°ГҐГ¬Гї Г¤Г® Г®ГІГЄГ°Г»ГІГЁГї', settings.time_on_screen) then
 				mainIni.settings.time_on_screen = settings.time_on_screen[0]
 				inicfg.save(mainIni)
 			end
 			imgui.SameLine()
-			imgui.TextQuestion("( ? )", u8"Вывод на экран времени до открытия рулетки")
+			imgui.TextQuestion("( ? )", u8"Г‚Г»ГўГ®Г¤ Г­Г  ГЅГЄГ°Г Г­ ГўГ°ГҐГ¬ГҐГ­ГЁ Г¤Г® Г®ГІГЄГ°Г»ГІГЁГї Г°ГіГ«ГҐГІГЄГЁ")
 
 			if settings.time_on_screen[0] and settings.enabled then
 				settings_y = 85
 				main_y = 100
-				if imgui.Button(u8"Изменить местоположение", imgui.ImVec2(200, 20)) then
-					chat_msg(string.format("Нажмите клавишу Space, чтобы сохранить позицию"), 0xFFE4B5)
+				if imgui.Button(u8"Г€Г§Г¬ГҐГ­ГЁГІГј Г¬ГҐГ±ГІГ®ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ", imgui.ImVec2(200, 20)) then
+					chat_msg(string.format("ГЌГ Г¦Г¬ГЁГІГҐ ГЄГ«Г ГўГЁГёГі Space, Г·ГІГ®ГЎГ» Г±Г®ГµГ°Г Г­ГЁГІГј ГЇГ®Г§ГЁГ¶ГЁГѕ"), 0xFFE4B5)
 					settings.change_time_position = true
 				end
 			else
@@ -151,7 +151,7 @@ local newFrame = imgui.OnFrame(
 		imgui.EndChild()
 
 		imgui.SetCursorPosX((imgui.GetWindowWidth() - 100) / 2)
-		local close_button_text = settings.enabled and u8"Деактивировать" or u8"Активировать"
+		local close_button_text = settings.enabled and u8"Г„ГҐГ ГЄГІГЁГўГЁГ°Г®ГўГ ГІГј" or u8"ГЂГЄГІГЁГўГЁГ°Г®ГўГ ГІГј"
 		if imgui.Button(close_button_text, imgui.ImVec2(120, 20)) then
 			start()
 		end
@@ -277,7 +277,7 @@ end
 function sampev.onShowTextDraw(id, data)
 if settings.enabled and sampIsLocalPlayerSpawned() then
 
-	if data.modelId == 1353 then  -- Платиновый сундук
+	if data.modelId == 1353 then  -- ГЏГ«Г ГІГЁГ­Г®ГўГ»Г© Г±ГіГ­Г¤ГіГЄ
 		chest.platinum.td_id = id
 		chest.platinum.td_time_id = id + 1
 		if chest.platinum.check_time and chest.platinum.open[0] then
@@ -285,7 +285,7 @@ if settings.enabled and sampIsLocalPlayerSpawned() then
 		end
 	end
 
-	if data.modelId == 1240 and tostring(data.zoom) == "0.89999902248383" then -- Сундук валентина
+	if data.modelId == 1240 and tostring(data.zoom) == "0.89999902248383" then -- Г‘ГіГ­Г¤ГіГЄ ГўГ Г«ГҐГ­ГІГЁГ­Г 
 		chest.valentine.td_id = id
 		chest.valentine.td_time_id = id + 1
 		if chest.valentine.check_time and chest.valentine.open[0] then
@@ -293,7 +293,7 @@ if settings.enabled and sampIsLocalPlayerSpawned() then
 		end
 	end
 
-	if data.modelId == 19613 then -- Сундук за 6.000 AZ
+	if data.modelId == 19613 then -- Г‘ГіГ­Г¤ГіГЄ Г§Г  6.000 AZ
 		chest.donate.td_id = id
 		chest.donate.td_time_id = id + 1
 		if chest.donate.check_time and chest.donate.open[0] then
@@ -301,7 +301,7 @@ if settings.enabled and sampIsLocalPlayerSpawned() then
 		end
 	end
 
-	if data.modelId == 19918 then -- Обычный сундук
+	if data.modelId == 19918 then -- ГЋГЎГ»Г·Г­Г»Г© Г±ГіГ­Г¤ГіГЄ
 		chest.common.td_id = id
 		chest.common.td_time_id = id + 1
 		if chest.common.check_time and chest.common.open[0] then
@@ -437,21 +437,21 @@ function autoupdate(json_url, prefix, url)
               lua_thread.create(function(prefix)
                 local dlstatus = require('moonloader').download_status
                 local color = -1
-                sampAddChatMessage((prefix..'Обнаружено обновление. Пытаюсь обновиться c '..thisScript().version..' на '..updateversion), color)
+                sampAddChatMessage((prefix..'ГЋГЎГ­Г Г°ГіГ¦ГҐГ­Г® Г®ГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ. ГЏГ»ГІГ ГѕГ±Гј Г®ГЎГ­Г®ГўГЁГІГјГ±Гї c '..thisScript().version..' Г­Г  '..updateversion), color)
                 wait(250)
                 downloadUrlToFile(updatelink, thisScript().path,
                   function(id3, status1, p13, p23)
                     if status1 == dlstatus.STATUS_DOWNLOADINGDATA then
-                      print(string.format('Загружено %d из %d.', p13, p23))
+                      print(string.format('Г‡Г ГЈГ°ГіГ¦ГҐГ­Г® %d ГЁГ§ %d.', p13, p23))
                     elseif status1 == dlstatus.STATUS_ENDDOWNLOADDATA then
-                      print('Загрузка обновления завершена.')
-                      sampAddChatMessage((prefix..'Обновление завершено!'), color)
+                      print('Г‡Г ГЈГ°ГіГ§ГЄГ  Г®ГЎГ­Г®ГўГ«ГҐГ­ГЁГї Г§Г ГўГҐГ°ГёГҐГ­Г .')
+                      sampAddChatMessage((prefix..'ГЋГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ Г§Г ГўГҐГ°ГёГҐГ­Г®!'), color)
                       goupdatestatus = true
                       lua_thread.create(function() wait(500) thisScript():reload() end)
                     end
                     if status1 == dlstatus.STATUSEX_ENDDOWNLOAD then
                       if goupdatestatus == nil then
-                        sampAddChatMessage((prefix..'Обновление прошло неудачно. Запускаю устаревшую версию..'), color)
+                        sampAddChatMessage((prefix..'ГЋГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ ГЇГ°Г®ГёГ«Г® Г­ГҐГіГ¤Г Г·Г­Г®. Г‡Г ГЇГіГ±ГЄГ Гѕ ГіГ±ГІГ Г°ГҐГўГёГіГѕ ГўГҐГ°Г±ГЁГѕ..'), color)
                         update = false
                       end
                     end
@@ -461,11 +461,11 @@ function autoupdate(json_url, prefix, url)
               )
             else
               update = false
-              print('v'..thisScript().version..': Обновление не требуется.')
+              print('v'..thisScript().version..': ГЋГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ Г­ГҐ ГІГ°ГҐГЎГіГҐГІГ±Гї.')
             end
           end
         else
-          print('v'..thisScript().version..': Не могу проверить обновление. Смиритесь или проверьте самостоятельно на '..url)
+          print('v'..thisScript().version..': ГЌГҐ Г¬Г®ГЈГі ГЇГ°Г®ГўГҐГ°ГЁГІГј Г®ГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ. Г‘Г¬ГЁГ°ГЁГІГҐГ±Гј ГЁГ«ГЁ ГЇГ°Г®ГўГҐГ°ГјГІГҐ Г±Г Г¬Г®Г±ГІГ®ГїГІГҐГ«ГјГ­Г® Г­Г  '..url)
           update = false
         end
       end
