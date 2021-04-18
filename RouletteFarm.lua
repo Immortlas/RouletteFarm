@@ -1,6 +1,6 @@
 script_name('RouletteFarm')
 script_author('DeneKyn')
-script_version("1.2")
+script_version("1.3")
 
 local sampev = require 'lib.samp.events'
 local imgui = require 'mimgui'
@@ -20,7 +20,8 @@ local mainIni = inicfg.load({
     common = true,
     donate = true,
     platinum = true,
-    valentine = false
+    valentine = false,
+    elon_mask = true
   },
 	settings =
 	{
@@ -50,6 +51,7 @@ local chest = {
 	donate = {sec = 0, td_id = 0, td_time_id = 0, check_time = false, open = new.bool(mainIni.chest_open.donate), name = "donate", kd = 14400},
 	platinum = {sec = 0, td_id = 0, td_time_id = 0, check_time = false, open = new.bool(mainIni.chest_open.platinum), name = "platinum", kd = 7200},
 	valentine = {sec = 0, td_id = 0, td_time_id = 0, check_time = false, open = new.bool(mainIni.chest_open.valentine), name = "valentine", kd = 3600},
+	elon_mask = {sec = 0, td_id = 0, td_time_id = 0, check_time = false, open = new.bool(mainIni.chest_open.elon_mask), name = "Elon_Mask", kd = 1800},
 }
 local buttons = {
 	close_invent = 0,
@@ -82,10 +84,10 @@ local newFrame = imgui.OnFrame(
 		local sizeX, sizeY = getScreenResolution()
 				print(main_y)
         imgui.SetNextWindowPos(imgui.ImVec2(sizeX / 2, sizeY / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
-        imgui.SetNextWindowSize(imgui.ImVec2(250, 270), imgui.Cond.FirstUseEver)
+        imgui.SetNextWindowSize(imgui.ImVec2(250, 295), imgui.Cond.FirstUseEver)
         imgui.Begin("Roulette Farm", renderWindow, imgui.WindowFlags.NoResize)
         imgui.Text(u8"Ящики")
-		imgui.BeginChild("##rullet", imgui.ImVec2(230, 84), true, imgui.WindowFlags.NoScrollbar)
+		imgui.BeginChild("##rullet", imgui.ImVec2(230, 108), true, imgui.WindowFlags.NoScrollbar)
 			if imgui.Checkbox(u8'Обычный', chest.common.open) then
 				mainIni.chest_open.common = chest.common.open[0]
 				inicfg.save(mainIni)
@@ -117,6 +119,17 @@ local newFrame = imgui.OnFrame(
 			if chest.platinum.sec > 0 then
 			imgui.SameLine(160)
 			imgui.Text(string.format("%dm : %ds ", math.floor(chest.platinum.sec/60), chest.platinum.sec%60))
+			end
+			
+			if imgui.Checkbox(u8'Илон Маск', chest.elon_mask.open) then
+				mainIni.chest_open.elon_mask = chest.elon_mask.open[0]
+				inicfg.save(mainIni)
+			end
+			imgui.SameLine()
+			imgui.TextQuestion("( ? )", u8"Ящик Илона Маска, который покупается в донат-меню за 5.000 AZ монет")
+			if chest.elon_mask.sec > 0 then
+			imgui.SameLine(160)
+			imgui.Text(string.format("%dm : %ds ", math.floor(chest.elon_mask.sec/60), chest.elon_mask.sec%60))
 			end
 		imgui.EndChild()
 
@@ -177,6 +190,7 @@ function start()
 				donate = {sec = 0, td_id = 0, td_time_id = 0, check_time = false, open = new.bool(mainIni.chest_open.donate), name = "donate", kd = 14400},
 				platinum = {sec = 0, td_id = 0, td_time_id = 0, check_time = false, open = new.bool(mainIni.chest_open.platinum), name = "platinum", kd = 7200},
 				valentine = {sec = 0, td_id = 0, td_time_id = 0, check_time = false, open = new.bool(mainIni.chest_open.valentine), name = "valentine", kd = 3600},
+				elon_mask = {sec = 0, td_id = 0, td_time_id = 0, check_time = false, open = new.bool(mainIni.chest_open.elon_mask), name = "Elon Mask", kd = 3600},
 			}
 			settings.click_use = false
 			settings.open_chest = false
@@ -293,6 +307,14 @@ function sampev.onShowTextDraw(id, data)
 				get_chest_time(chest.common)
 			end
 		end
+		
+		if data.modelId == 1733 then -- Илона Маска сундук
+			chest.elon_mask.td_id = id
+			chest.elon_mask.td_time_id = id + 1
+			if chest.elon_mask.check_time and chest.elon_mask.open[0] then
+				get_chest_time(chest.elon_mask)
+			end
+		end
 
 		if data.text == 'USE' and  data.style == 1 and  data.letterColor == -3355444 then
 			buttons.use = id+1
@@ -406,6 +428,10 @@ function textdraw_string()
 	
 	if chest.platinum.open[0] then
 		td_text = td_text..string.format("%s-%d:%d~n~", chest.platinum.name, math.floor(chest.platinum.sec/60), chest.platinum.sec%60)
+	end	
+	
+	if chest.elon_mask.open[0] then
+		td_text = td_text..string.format("%s-%d:%d~n~", chest.elon_mask.name, math.floor(chest.elon_mask.sec/60), chest.elon_mask.sec%60)
 	end	
 	return td_text
 end
